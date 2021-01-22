@@ -1,0 +1,145 @@
+Person {
+	"userName"
+	"firstName"
+	"lastName"
+	"address"
+	"imageBlob"
+	"passwordHash"
+	"drives": [ of Person ]
+	"friends": [ of Person ]
+}
+
+Drive {
+	"name"
+	"dest"
+	"date"
+	"driver": IndexOf(Person)
+	participants: [ of Person ] // Including driver
+}
+
+coll persons
+coll drives
+
+db.persons.insertOne({
+	"userName": "test",
+	"firstName": "Roei",
+	"lastName": "Jac",
+	"address": "27 Nir David St.",
+	"drives": [],
+	"friends": []
+})
+
+db.persons.insertOne({
+	"userName": "test2",
+	"firstName": "Roei",
+	"lastName": "Jac",
+	"address": "27 Nir David St.",
+	"drives": [],
+	"friends": []
+})
+
+db.drives.insertOne({
+	"name": "testRide",
+	"dest": "Sleep",
+	"date": ISODate("2017-10-27"),
+	"driver": db.persons.findOne({"userName": "test"})._id,
+	"participants": [
+		db.persons.findOne({"userName": "test"})._id,
+		db.persons.findOne({"userName": "test2"})._id
+	]
+})
+
+IsUsernameTaken (username)
+SignUpUser (username, password, firstName, lastName, address, image)
+GetUserFriends (username, auth)
+GetUserProfile (username, auth)
+GetDrives()
+DeleteDrive( //
+GetFriends(ids?)
+AddDrive (name, dest, date, [] of participants, driver-PersonID)
+
+New:
+Login(username, password) - get auth key
+UpdateDrive?
+
+// The objects ----------------------------------------------------
+Person = {
+	"username" 	{String}
+	"email" 	{String}
+	"password"	{String}
+	"firstName"	{String}
+	"lastName"	{String}
+	"address"	{String}
+	"drives"	{Drive[]}
+	"friends"	{String[]}	// Array of usernames
+}
+
+Drive = {
+	"_id"			{String}
+	"name"			{String}
+	"dest"			{String}
+	"date"			{Date}
+	"driver"		{String}	// Username of driver Person
+	"participants"	{String[]}	// Array of usernames
+}
+// ----------------------------------------------------
+
+
+// points of drivers - each driver get points from the participants
+// Creator 
+
+// API Documentation
+// Errors will be given as {"error": "<description>"} output, 
+// as 400 bad request
+
+// DRIVE -------------------
+GET /drive/<id>
+Output: Drive object
+
+// ---
+
+// PERSON ------------------
+GET /person/<username>
+Output: Person object, with following exceptions:
+			- No password or e-mail
+			- No address, if not a friend
+			- No drives
+		If the authenticated user requesting itself:
+			- Give e-mail and address
+// -------
+POST /person/<username>
+Input:	Fields that the user wants to change
+		Support for username, first and last names, address
+Output: {"result": bool}
+// -------
+GET /person/<username>/drives
+Input: 	For user itself, get all drives
+		For another user, get mutual drives
+Output: Array of Drive objects
+// -------
+GET /person/<query>/search
+Input:	Searching ^<query>*$, useful for autocomplete
+Output: Array of {"username", "firstName", "lastName"}
+		Sorted by mutual friends, decending
+
+// DRIVE ------------------
+GET /drive/<drive_id>
+Output: For participants of the drive, get the Drive object
+// -------
+PUT /drive
+Input: 
+Output: For participants of the drive, get the Drive object
+DELETE /drive/<drive_id>
+Input: for authenticated only
+Output {"result": bool}
+
+// AUTH --------------------
+POST /api/auth/login 
+Input:		{"username", "password"}
+Output:		{"apiKey"}
+// ---
+POST /api/auth/register
+Input:		{"username", "password", "email", 
+				"firstName", "lastName", "address"}
+Output:		{"result": bool}
+// -------------------------

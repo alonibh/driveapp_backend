@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+    app:
+        container_name: app
+        restart: always
+        build: ./app
+        volumes:
+            - ./app:/usr/src/app
+        ports:
+            - "3000:3000"
+            - "9229:9229"
+        links:
+            - mongo
+    mongo:
+        container_name: mongo
+        image: mongo
+        volumes:
+            - ./mongo/mongo_data:/data/db
+        ports: 
+            - "27017:27017"

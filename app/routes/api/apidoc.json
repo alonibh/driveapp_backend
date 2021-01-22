@@ -1,0 +1,9 @@
+{
+    "name": "driveapp",
+    "version": "0.1.0",
+    "description": "DriveApp RESTful API docs",
+    "apidoc": {
+      "title": "DriveApp RESTful API meow",
+      "url": "https://devdriveapp.meow/api"
+    }
+}

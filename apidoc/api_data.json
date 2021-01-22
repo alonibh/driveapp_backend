@@ -1,0 +1,1057 @@
+[
+  {
+    "type": "post",
+    "url": "/auth/login",
+    "title": "Login",
+    "version": "0.1.0",
+    "name": "Login",
+    "group": "Auth",
+    "description": "<p>Login. currently simple login, using username and password.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>username</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>password</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>success boolean</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>authorization token (send as Authorization header)</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalidCreds",
+            "description": "<p>Invalid username or password</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/auth.js",
+    "groupTitle": "Auth"
+  },
+  {
+    "type": "post",
+    "url": "/auth/signup",
+    "title": "Signup",
+    "group": "Auth",
+    "description": "<p>Sign up a user.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>username</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>password</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "firstName",
+            "description": "<p>First name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "lastName",
+            "description": "<p>Last name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "address",
+            "description": "<p>address</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>success boolean</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UsernameExists",
+            "description": "<p>Username already exists</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadParameters",
+            "description": "<p>Bad Parameteremail (if same user)s</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "app/routes/api/auth.js",
+    "groupTitle": "Auth",
+    "name": "PostAuthSignup"
+  },
+  {
+    "type": "put",
+    "url": "/drive/",
+    "title": "AddDrive",
+    "version": "0.1.0",
+    "name": "AddDrive",
+    "group": "Drive",
+    "permission": [
+      {
+        "name": "vary"
+      }
+    ],
+    "description": "<p>Add a Drive. Adding user must be a participant of the drive.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "dest",
+            "description": "<p>drive destination</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "date",
+            "description": "<p>drive date</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "driver",
+            "description": "<p>drive driver username</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String[]",
+            "optional": false,
+            "field": "participants",
+            "description": "<p>drive participants usernames array</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>success boolean</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>Not authorized to add drive, not a participant</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthRequired",
+            "description": "<p>Authentication header not found</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/drive.js",
+    "groupTitle": "Drive"
+  },
+  {
+    "type": "delete",
+    "url": "/drive/:id",
+    "title": "DeleteDrive",
+    "version": "0.1.0",
+    "name": "DeleteDrive",
+    "group": "Drive",
+    "permission": [
+      {
+        "name": "participants of the drive"
+      }
+    ],
+    "description": "<p>Delete a Drive. Deleting user must be a participant of the drive.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>drive id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>success boolean</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DriveNotFound",
+            "description": "<p>Drive Not Found</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>Not authorized to update drive, not a participant</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthRequired",
+            "description": "<p>Authentication header not found</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/drive.js",
+    "groupTitle": "Drive"
+  },
+  {
+    "type": "get",
+    "url": "/drive/:id",
+    "title": "GetDrive",
+    "name": "GetDrive",
+    "group": "Drive",
+    "version": "0.1.0",
+    "permission": [
+      {
+        "name": "vary"
+      }
+    ],
+    "description": "<p>Get a Drive object. If user is not a participant, None</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>drive id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>drive id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "dest",
+            "description": "<p>drive destination</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "date",
+            "description": "<p>drive date</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "driver",
+            "description": "<p>drive driver username</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String[]",
+            "optional": false,
+            "field": "participants",
+            "description": "<p>drive participants usernames array</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DriveNotFound",
+            "description": "<p>Drive Not Found</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>Not authorized to get drive</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthRequired",
+            "description": "<p>Authentication header not found</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/drive.js",
+    "groupTitle": "Drive"
+  },
+  {
+    "type": "patch",
+    "url": "/drive/:id",
+    "title": "UpdateDrive",
+    "version": "0.1.0",
+    "name": "UpdateDrive",
+    "group": "Drive",
+    "permission": [
+      {
+        "name": "participants of the drive"
+      }
+    ],
+    "description": "<p>Update a Drive. Editing user must be a participant of the drive.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>drive id (URL param)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "dest",
+            "description": "<p>drive destination</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "date",
+            "description": "<p>drive date</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "driver",
+            "description": "<p>drive driver username</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String[]",
+            "optional": false,
+            "field": "participants",
+            "description": "<p>drive participants usernames array</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>success boolean</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DriveNotFound",
+            "description": "<p>Drive Not Found</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>Not authorized to update drive, not a participant</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthRequired",
+            "description": "<p>Authentication header not found</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/drive.js",
+    "groupTitle": "Drive"
+  },
+  {
+    "type": "get",
+    "url": "/person/:username",
+    "title": "GetPerson",
+    "version": "0.1.0",
+    "name": "GetPerson",
+    "group": "Person",
+    "permission": [
+      {
+        "name": "vary"
+      }
+    ],
+    "description": "<p>Get a Person object. For the user requesting anyone else: username, firstName, lastName If the user is a friend, get an address too If it's the user itself, get an e-mail too</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>The username (unique)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "person",
+            "description": "<p>person</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "person.username",
+            "description": "<p>username</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "person.firstName",
+            "description": "<p>firstName</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "person.lastName",
+            "description": "<p>lastName</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "person.address",
+            "description": "<p>address (if friends)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "person.email",
+            "description": "<p>email (if same user)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "person.friends",
+            "description": "<p>friends list (currently all users)</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "PersonNotFound",
+            "description": "<p>Person Not Found</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthRequired",
+            "description": "<p>Authentication header not found</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/person.js",
+    "groupTitle": "Person"
+  },
+  {
+    "type": "get",
+    "url": "/person/:username/drives",
+    "title": "GetPersonDrives",
+    "version": "0.1.0",
+    "name": "GetPersonDrives",
+    "group": "Person",
+    "permission": [
+      {
+        "name": "vary"
+      }
+    ],
+    "description": "<p>Get a Drive array. For the user requesting anyone else: None If the user has mutual drives: Mutual drives If it's the user itself: All drives (100 limit from top by time)</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>The username (unique)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "drives",
+            "description": "<p>Array of Drive objects</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "PersonNotFound",
+            "description": "<p>Person Not Found</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>Not authorized to get drives</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthRequired",
+            "description": "<p>Authentication header not found</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/person.js",
+    "groupTitle": "Person"
+  },
+  {
+    "type": "get",
+    "url": "/person/:query/search",
+    "title": "SearchPerson",
+    "version": "0.1.0",
+    "name": "SearchPerson",
+    "group": "Person",
+    "permission": [
+      {
+        "name": "Everyone"
+      }
+    ],
+    "description": "<p>Search Persons. Search for a username starting with the &quot;query&quot; param Ending with anything (wildcard). Getting back an array of top 30 results, sorted decending by top mutual friends.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "query",
+            "description": "<p>username query</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "results",
+            "description": "<p>array of limited Person object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "results.username",
+            "description": "<p>username</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "results.firstName",
+            "description": "<p>First name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "results.lastName",
+            "description": "<p>Last name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "results.mutualFriends",
+            "description": "<p>Number of mutual friends</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthRequired",
+            "description": "<p>Authentication header not found</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/person.js",
+    "groupTitle": "Person"
+  },
+  {
+    "type": "patch",
+    "url": "/person/:username",
+    "title": "UpdatePerson",
+    "version": "0.1.0",
+    "name": "UpdatePerson",
+    "group": "Person",
+    "permission": [
+      {
+        "name": "SameUserOnly"
+      }
+    ],
+    "description": "<p>Update a Person, send one or another Person object fields to update</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>The username (unique)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "firstName",
+            "description": "<p>firstName, optional</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "lastName",
+            "description": "<p>lastName, optional</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "address",
+            "description": "<p>address, optional</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>success boolean</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "PersonNotFound",
+            "description": "<p>Person Not Found</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>Not authorized to update</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthRequired",
+            "description": "<p>Authentication header not found</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/person.js",
+    "groupTitle": "Person"
+  },
+  {
+    "type": "put",
+    "url": "/person/:username/friend",
+    "title": "addFriend",
+    "version": "0.1.0",
+    "name": "addFriend",
+    "group": "Person",
+    "description": "<p>Add a friend.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>username to add as friend</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>success boolean</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "PersonNotFound",
+            "description": "<p>Person Not Found</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "PersonAlreadyFriend",
+            "description": "<p>Person is already a friend</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>Not authorized to add friend</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthRequired",
+            "description": "<p>Authentication header not found</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/person.js",
+    "groupTitle": "Person"
+  },
+  {
+    "type": "delete",
+    "url": "/person/:username/friend",
+    "title": "deleteFriend",
+    "version": "0.1.0",
+    "name": "deleteFriend",
+    "group": "Person",
+    "description": "<p>Delete a friend.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>username to delete as friend</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>success boolean</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "PersonNotFound",
+            "description": "<p>Person Not Found</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "PersonNotFriend",
+            "description": "<p>Person is not a friend already</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>Not authorized to add friend</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthRequired",
+            "description": "<p>Authentication header not found</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/person.js",
+    "groupTitle": "Person"
+  },
+  {
+    "type": "get",
+    "url": "/person/:username/friends",
+    "title": "getFriends",
+    "version": "0.1.0",
+    "name": "getFriends",
+    "group": "Person",
+    "description": "<p>Get a list of friends with statuses.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>username to get friends of</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "friends",
+            "description": "<p>friends list (Persons with status)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "friends.username",
+            "description": "<p>username</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "friends.firstName",
+            "description": "<p>firstName</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "friends.lastName",
+            "description": "<p>lastName</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "friends.address",
+            "description": "<p>address</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "friends.status",
+            "description": "<p>status: &quot;Pending&quot; or &quot;Accepted&quot;</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "PersonNotFound",
+            "description": "<p>Person Not Found</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>Not authorized to get friends list</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthRequired",
+            "description": "<p>Authentication header not found</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/api/person.js",
+    "groupTitle": "Person"
+  }
+]
